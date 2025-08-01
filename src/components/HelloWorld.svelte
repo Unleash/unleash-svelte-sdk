@@ -9,7 +9,7 @@
 </script>
 
 <main>
-	<h1>proxy-client-svelte</h1>
+	<h1>unleash-svelte-sdk</h1>
 
 	{#if !$flagsReady}
 		<p>Loading...</p>
