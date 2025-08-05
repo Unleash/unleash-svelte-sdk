@@ -10,7 +10,7 @@
 		clientKey:
 			'proxy-client-svelte:development.f7d5c2f3633769afea4eadecd6bf46194dccec9c75170930c76ab4f0',
 		refreshInterval: 2,
-		appName: 'proxy-client-svelte'
+		appName: 'unleash-svelte-sdk',
 	};
 </script>
 

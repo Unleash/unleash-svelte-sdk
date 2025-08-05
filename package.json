@@ -4,7 +4,7 @@
 	"description": "Svelte interface for working with Unleash",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/Unleash/proxy-client-svelte"
+		"url": "https://github.com/Unleash/unleash-svelte-sdk"
 	},
 	"scripts": {
 		"dev": "vite dev",
