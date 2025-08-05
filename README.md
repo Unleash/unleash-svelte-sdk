@@ -1,7 +1,5 @@
 # Unleash Svelte SDK
 
-[![npm version](https://badge.fury.io/js/%40unleash%2Fproxy-client-svelte.svg)](https://www.npmjs.com/package/@unleash/proxy-client-svelte)
-[![GitHub Workflow Status](https://github.com/Unleash/unleash-svelte-sdk/actions/workflows/build.yml/badge.svg)](https://github.com/Unleash/unleash-svelte-sdk/actions)
 
 Unleash is a private, secure, and scalable [feature management platform](https://www.getunleash.io/) built to reduce the risk of releasing new features and accelerate software development. This Svelte SDK is designed to help you integrate with Unleash and evaluate feature flags inside your application.
 
