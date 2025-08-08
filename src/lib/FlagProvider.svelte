@@ -4,24 +4,26 @@
 	import { UnleashClient } from 'unleash-proxy-client';
 	import type { IConfig, IContext } from 'unleash-proxy-client';
 	import { get, writable } from 'svelte/store';
+	import { sdkVersion } from './version.js';
 
 	export let config: IConfig | undefined = undefined;
 	export let unleashClient: UnleashClient | undefined = undefined;
 	export let startClient = true;
 
-	let client = writable<UnleashClient | undefined>(unleashClient);
+	let client = writable<UnleashClient | undefined>();
 	let flagsReady = writable(false);
 	let flagsError = writable(null);
 
-	if (!config && !unleashClient) {
+	if (unleashClient) {
+		unleashClient.setSdkVersion(sdkVersion);
+		client.set(unleashClient);
+	} else if (config) {
+		client.set(new UnleashClient({ ...config, sdkVersion }));
+	} else {
 		console.warn(
 			`You must provide either a config or an unleash client to the flag provider. If you are initializing the client in useEffect, you can avoid this warning by
       checking if the client exists before rendering.`
 		);
-	}
-
-	if (!get(client) && config) {
-		client.set(new UnleashClient(config));
 	}
 
 	const currentClient = get(client);
