@@ -1,6 +1,6 @@
 {
 	"name": "@unleash/proxy-client-svelte",
-	"version": "0.4.2",
+	"version": "1.0.0",
 	"description": "Svelte interface for working with Unleash",
 	"repository": {
 		"type": "git",
@@ -50,7 +50,7 @@
 		"vite": "^4.4.2"
 	},
 	"dependencies": {
-		"unleash-proxy-client": "^3.7.2"
+		"unleash-proxy-client": "^4.0.0"
 	},
 	"svelte": "./dist/index.js",
 	"types": "./dist/index.d.ts",
