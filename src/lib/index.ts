@@ -1,5 +1,6 @@
 export type {
 	IConfig,
+	IContext,
 	IMutableContext,
 	IVariant,
 	IToggle,
