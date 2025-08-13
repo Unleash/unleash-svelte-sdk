@@ -2,7 +2,7 @@
 	import { setContext, onMount } from 'svelte';
 	import { ContextStateSymbol, type TContext, type eventArgs } from './context.js';
 	import { UnleashClient } from 'unleash-proxy-client';
-	import type { IConfig, IContext } from 'unleash-proxy-client';
+	import type { IConfig, IMutableContext } from 'unleash-proxy-client';
 	import { get, writable } from 'svelte/store';
 
 	export let config: IConfig | undefined = undefined;
@@ -40,7 +40,7 @@
 		if (shouldStartClient) currentClient?.start();
 	});
 
-	const updateContext = async (context: IContext): Promise<void> => {
+	const updateContext = async (context: IMutableContext): Promise<void> => {
 		const currentClient = get(client);
 		await currentClient?.updateContext(context);
 	};
