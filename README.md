@@ -5,6 +5,8 @@ Unleash is a private, secure, and scalable [feature management platform](http
 
 You can use this client with [Unleash Enterprise](https://www.getunleash.io/pricing?utm_source=readme&utm_medium=svelte) or [Unleash Open Source](https://github.com/Unleash/unleash).
 
+Check out the sample app: https://proxy-client-svelte.vercel.app
+
 # Installation
 
 ```bash
