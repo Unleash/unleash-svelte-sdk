@@ -1,0 +1,14 @@
+{
+	"compilerOptions": {
+		"target": "ES2022",
+		"module": "ESNext",
+		"moduleResolution": "bundler",
+		"strict": true,
+		"skipLibCheck": true,
+		"allowJs": true,
+		"checkJs": true,
+		"esModuleInterop": true,
+		"types": ["node"]
+	},
+	"include": ["*.ts", "*.svelte"]
+}

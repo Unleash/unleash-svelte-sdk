@@ -14,6 +14,13 @@ npm install @unleash/proxy-client-svelte
 yarn add @unleash/proxy-client-svelte
 ```
 
+## Upgrading to 1.0
+
+- Upgrade to Svelte 5.55.7 or newer. Existing component syntax and store-based hooks remain supported.
+- `startClient={false}` now prevents automatic startup for configured clients too. If you used it with `config`, start the client yourself or remove the prop.
+- Providers now stop supplied clients when destroyed. For shared or externally managed clients, pass both `startClient={false}` and `stopClient={false}` and manage their lifecycle outside the provider.
+- The `flagsError` store now has type `unknown`. Check the error's type before reading its properties.
+
 # How to use
 
 ## Initialize the client
@@ -202,4 +209,4 @@ When managing startup yourself, wait for `client.start()` to finish before calli
 
 ## Development
 
-Run `npm run lint`, `npm run check`, `npm test`, and `npm run build` before submitting changes.
+Run `npm run lint`, `npm run check`, `npm test`, `npm run build`, and `npm run test:package` before submitting changes.

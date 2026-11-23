@@ -28,5 +28,9 @@ jobs:
         run: yarn lint
       - name: Check
         run: yarn run check
+      - name: Test
+        run: yarn test
       - name: Build
         run: yarn build
+      - name: Package compatibility
+        run: yarn test:package
