@@ -148,7 +148,7 @@ This code sample shows you how to update the unleash context dynamically:
 
 ## Deferring client start
 
-By default, the Unleash client will start polling for toggles immediately when the `FlagProvider` component renders. You can prevent it by setting `startClient` prop to `false`. This is useful when you'd like to for example bootstrap the client and work offline.
+By default, the Unleash client will start polling for toggles when the `FlagProvider` component mounts. You can prevent it by setting `startClient` prop to `false`. This is useful when you'd like to for example bootstrap the client and work offline.
 
 Deferring the client start gives you more fine-grained control over when to start fetching the feature toggle configuration. This could be handy in cases where you need to get some other context data from the server before fetching toggles, for instance.
 
@@ -168,6 +168,14 @@ To start the client, use the client's `start` method. The below snippet of pseud
 	<App />
 </FlagProvider>
 ```
+
+## Client lifecycle
+
+`FlagProvider` starts its client on mount and stops it on destruction by default. This also applies to a supplied `unleashClient`. Set `startClient={false}` to manage startup yourself. For a client shared between providers or managed elsewhere, set both `startClient={false}` and `stopClient={false}` and manage its lifecycle outside the providers.
+
+When managing startup yourself, wait for `client.start()` to finish before calling `client.stop()`: the JavaScript client cannot cancel a pending start. The provider handles this cleanup for startup it initiates itself.
+
+`useFlagsStatus()` recognizes a client that is already ready or has an existing error. Bootstrap data is ready immediately unless `bootstrapOverride` is `false`; a `recovered` event clears the error. Provider status listeners and flag and variant subscriptions are removed when their components are destroyed.
 
 ## Use unleash client directly
 
@@ -194,4 +202,4 @@ To start the client, use the client's `start` method. The below snippet of pseud
 
 ## Development
 
-Run `npm run lint`, `npm run check`, and `npm run build` before submitting changes.
+Run `npm run lint`, `npm run check`, `npm test`, and `npm run build` before submitting changes.

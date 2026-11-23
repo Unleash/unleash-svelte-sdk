@@ -1,64 +1,69 @@
 <script lang="ts">
-	import { setContext, onMount } from 'svelte';
+	import { setContext, onMount, onDestroy } from 'svelte';
 	import { ContextStateSymbol, type TContext } from './context.js';
 	import { UnleashClient } from 'unleash-proxy-client';
 	import type { IConfig, IMutableContext } from 'unleash-proxy-client';
-	import { get, writable } from 'svelte/store';
+	import { writable } from 'svelte/store';
 
 	export let config: IConfig | undefined = undefined;
 	export let unleashClient: UnleashClient | undefined = undefined;
 	export let startClient = true;
+	export let stopClient = true;
 
-	let client = writable<UnleashClient | undefined>(unleashClient);
-	let flagsReady = writable(false);
-	let flagsError = writable<unknown>(null);
+	const currentClient = unleashClient ?? (config ? new UnleashClient(config) : undefined);
+	const client = writable(currentClient);
+	const flagsReady = writable(
+		Boolean(
+			currentClient?.isReady() ||
+			(!unleashClient && config?.bootstrap && config.bootstrapOverride !== false)
+		)
+	);
+	const flagsError = writable<unknown>(currentClient?.getError() ?? null);
 
-	if (!config && !unleashClient) {
-		console.warn(
-			`You must provide either a config or an unleash client to the flag provider. If you are initializing the client in useEffect, you can avoid this warning by
-      checking if the client exists before rendering.`
-		);
+	if (!currentClient) {
+		console.warn('You must provide either a config or an Unleash client to FlagProvider.');
 	}
 
-	if (!get(client) && config) {
-		client.set(new UnleashClient(config));
-	}
+	const onReady = () => flagsReady.set(true);
+	const onError = (error: unknown) => flagsError.set(error);
+	const onRecovered = () => flagsError.set(null);
 
-	const currentClient = get(client);
+	currentClient?.on('ready', onReady);
+	currentClient?.on('error', onError);
+	currentClient?.on('recovered', onRecovered);
 
-	currentClient?.on('ready', () => {
-		flagsReady.set(true);
-	});
-
-	currentClient?.on('error', (e: unknown) => {
-		flagsError.set(e);
+	onDestroy(() => {
+		currentClient?.off('ready', onReady);
+		currentClient?.off('error', onError);
+		currentClient?.off('recovered', onRecovered);
 	});
 
 	onMount(() => {
-		const currentClient = get(client);
-		const shouldStartClient = startClient || !unleashClient;
-		if (shouldStartClient) currentClient?.start();
+		let destroyed = false;
+		if (startClient && currentClient) {
+			currentClient.stop();
+			void currentClient.start().then(
+				() => {
+					// start() can finish installing polling after the provider has been destroyed.
+					if (destroyed && stopClient) currentClient.stop();
+				},
+				(error: unknown) => {
+					if (!destroyed) onError(error);
+				}
+			);
+		}
+		return () => {
+			destroyed = true;
+			if (stopClient) currentClient?.stop();
+		};
 	});
 
 	const updateContext = async (context: IMutableContext): Promise<void> => {
-		const currentClient = get(client);
 		await currentClient?.updateContext(context);
 	};
-
-	const isEnabled = (name: string) => {
-		const currentClient = get(client);
-		return currentClient?.isEnabled(name);
-	};
-
-	const getVariant = (name: string) => {
-		const currentClient = get(client);
-		return currentClient?.getVariant(name);
-	};
-
-	const on = (...args: Parameters<UnleashClient['on']>) => {
-		const currentClient = get(client);
-		return currentClient?.on(...args);
-	};
+	const isEnabled = (name: string) => currentClient?.isEnabled(name);
+	const getVariant = (name: string) => currentClient?.getVariant(name);
+	const on = (...args: Parameters<UnleashClient['on']>) => currentClient?.on(...args);
 
 	setContext<TContext>(ContextStateSymbol, {
 		on,

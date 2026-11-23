@@ -1,4 +1,4 @@
-import { getContext } from 'svelte';
+import { getContext, onDestroy } from 'svelte';
 import { writable, get } from 'svelte/store';
 import { ContextStateSymbol, type TContext } from './context.js';
 
@@ -17,6 +17,11 @@ const useFlag = (name: string) => {
 
 	currentClient?.on('update', updateFlagValue);
 	currentClient?.on('ready', updateFlagValue);
+
+	onDestroy(() => {
+		currentClient?.off('update', updateFlagValue);
+		currentClient?.off('ready', updateFlagValue);
+	});
 
 	return flag;
 };
