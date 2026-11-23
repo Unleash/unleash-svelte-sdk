@@ -1,6 +1,5 @@
 # Unleash Svelte SDK
 
-
 Unleash is a private, secure, and scalable [feature management platform](https://www.getunleash.io/) built to reduce the risk of releasing new features and accelerate software development. This Svelte SDK is designed to help you integrate with Unleash and evaluate feature flags inside your application.
 
 You can use this client with [Unleash Enterprise](https://www.getunleash.io/pricing?utm_source=readme&utm_medium=svelte) or [Unleash Open Source](https://github.com/Unleash/unleash).
@@ -94,7 +93,7 @@ To check variants:
 
 ## Defer rendering until flags fetched
 
-useFlagsStatus retrieves the ready state and error events.
+useFlagsStatus retrieves the ready state and error events. The error store contains `unknown`; check the value's type before accessing error properties.
 Follow the following steps in order to delay rendering until the flags have been fetched.
 
 ```svelte
@@ -157,9 +156,7 @@ To start the client, use the client's `start` method. The below snippet of pseud
 
 ```svelte
 <script lang="ts">
-	const client = new UnleashClient({
-		/* ... */
-	});
+	const client = new UnleashClient({/* ... */});
 
 	onMount(async () => {
 		// do async work ...
@@ -194,3 +191,7 @@ To start the client, use the client's `start` method. The below snippet of pseud
 
 <LoginForm {login} />
 ```
+
+## Development
+
+Run `npm run lint`, `npm run check`, and `npm run build` before submitting changes.
