@@ -209,4 +209,6 @@ When managing startup yourself, wait for `client.start()` to finish before calli
 
 ## Development
 
-Run `npm run lint`, `npm run check`, `npm test`, `npm run build`, and `npm run test:package` before submitting changes.
+Install pnpm, then run `pnpm install`. The `packageManager` field in `package.json` pins the version used by this repository.
+
+Run `pnpm lint`, `pnpm check`, `pnpm test`, `pnpm build`, and `pnpm test:package` before submitting changes.
