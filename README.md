@@ -7,7 +7,7 @@ You can use this client with [Unleash Enterprise](https://www.getunleash.io/pric
 
 # Installation
 
-Requires Svelte 5.55.7 or newer within Svelte 5.
+Requires Svelte 5.55.7 or newer.
 
 ```bash
 npm install @unleash/proxy-client-svelte
