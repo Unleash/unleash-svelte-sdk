@@ -1,4 +1,4 @@
-import { getContext } from 'svelte';
+import { getContext, onDestroy } from 'svelte';
 import { writable, get } from 'svelte/store';
 import { ContextStateSymbol, type TContext } from './context.js';
 import type { IVariant } from 'unleash-proxy-client';
@@ -31,6 +31,11 @@ const useVariant = (name: string) => {
 
 	currentClient?.on('update', updateVariantValue);
 	currentClient?.on('ready', updateVariantValue);
+
+	onDestroy(() => {
+		currentClient?.off('update', updateVariantValue);
+		currentClient?.off('ready', updateVariantValue);
+	});
 
 	return variantStore;
 };

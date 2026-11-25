@@ -93,7 +93,7 @@ To check variants:
 
 ## Defer rendering until flags fetched
 
-useFlagsStatus retrieves the ready state and error events.
+`useFlagsStatus()` provides stores for client readiness and errors.
 Follow the following steps in order to delay rendering until the flags have been fetched.
 
 ```svelte
@@ -148,7 +148,7 @@ This code sample shows you how to update the unleash context dynamically:
 
 ## Deferring client start
 
-By default, the Unleash client will start polling for toggles immediately when the `FlagProvider` component renders. You can prevent it by setting `startClient` prop to `false`. This is useful when you'd like to for example bootstrap the client and work offline.
+By default, the Unleash client will start polling for toggles when the `FlagProvider` component mounts. You can prevent it by setting `startClient` prop to `false`. This is useful when you'd like to for example bootstrap the client and work offline.
 
 Deferring the client start gives you more fine-grained control over when to start fetching the feature toggle configuration. This could be handy in cases where you need to get some other context data from the server before fetching toggles, for instance.
 
@@ -168,6 +168,10 @@ To start the client, use the client's `start` method. The below snippet of pseud
 	<App />
 </FlagProvider>
 ```
+
+## Client lifecycle
+
+`FlagProvider` starts its client on mount and stops it on destruction by default. This also applies to a supplied `unleashClient`. Set `startClient={false}` to manage startup yourself. For a client shared between providers or managed elsewhere, set both `startClient={false}` and `stopClient={false}` and manage its lifecycle outside the providers.
 
 ## Use unleash client directly
 
