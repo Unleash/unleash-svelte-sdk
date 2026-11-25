@@ -1,0 +1,9 @@
+engineStrict: true
+ignoreScripts: true
+minimumReleaseAge: 10080
+minimumReleaseAgeIgnoreMissingTime: false
+minimumReleaseAgeExclude:
+  - unleash-proxy-client
+  # Reviewed tooling updates from PR #32, published 2026-11-18.
+  - '@sveltejs/kit@3.4.0'
+  - '@sveltejs/adapter-auto@9.0.0'

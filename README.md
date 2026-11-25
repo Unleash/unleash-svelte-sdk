@@ -7,6 +7,8 @@ You can use this client with [Unleash Enterprise](https://www.getunleash.io/pric
 
 # Installation
 
+Requires Svelte 5.55.7 or newer.
+
 ```bash
 npm install @unleash/proxy-client-svelte
 # or
@@ -191,4 +193,13 @@ To start the client, use the client's `start` method. The below snippet of pseud
 </script>
 
 <LoginForm {login} />
+```
+
+## Development
+
+Install pnpm, then install dependencies and start the demo:
+
+```bash
+pnpm install
+pnpm dev
 ```
