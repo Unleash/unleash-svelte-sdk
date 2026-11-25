@@ -3,14 +3,12 @@ import type { IMutableContext, IVariant, UnleashClient } from 'unleash-proxy-cli
 
 export const ContextStateSymbol = Symbol('Context state identifier');
 
-export type eventArgs = [Function, any];
-
 export type TContext = {
-	on: (event: string, ...args: eventArgs) => void;
+	on: (...args: Parameters<UnleashClient['on']>) => void;
 	updateContext: (context: IMutableContext) => Promise<void>;
 	isEnabled: (name: string) => boolean | undefined;
 	getVariant: (name: string) => IVariant | undefined;
 	client: Writable<UnleashClient | undefined>;
 	flagsReady: Writable<boolean>;
-	flagsError: Writable<any | null>;
+	flagsError: Writable<unknown>;
 };

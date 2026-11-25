@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { setContext, onMount } from 'svelte';
-	import { ContextStateSymbol, type TContext, type eventArgs } from './context.js';
+	import { ContextStateSymbol, type TContext } from './context.js';
 	import { UnleashClient } from 'unleash-proxy-client';
 	import type { IConfig, IMutableContext } from 'unleash-proxy-client';
 	import { get, writable } from 'svelte/store';
@@ -11,7 +11,7 @@
 
 	let client = writable<UnleashClient | undefined>(unleashClient);
 	let flagsReady = writable(false);
-	let flagsError = writable(null);
+	let flagsError = writable<unknown>(null);
 
 	if (!config && !unleashClient) {
 		console.warn(
@@ -30,7 +30,7 @@
 		flagsReady.set(true);
 	});
 
-	currentClient?.on('error', (e: any) => {
+	currentClient?.on('error', (e: unknown) => {
 		flagsError.set(e);
 	});
 
@@ -55,9 +55,9 @@
 		return currentClient?.getVariant(name);
 	};
 
-	const on = (event: string, ...args: eventArgs) => {
+	const on = (...args: Parameters<UnleashClient['on']>) => {
 		const currentClient = get(client);
-		return currentClient?.on(event, ...args);
+		return currentClient?.on(...args);
 	};
 
 	setContext<TContext>(ContextStateSymbol, {
