@@ -14,6 +14,10 @@ npm install @unleash/proxy-client-svelte
 yarn add @unleash/proxy-client-svelte
 ```
 
+> **Migrating to v1**
+>
+> Read the [v1 migration guide](./v1_MIGRATION_GUIDE.md) before upgrading.
+
 # How to use
 
 ## Initialize the client

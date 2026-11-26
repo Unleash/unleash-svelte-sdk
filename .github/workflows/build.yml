@@ -33,3 +33,5 @@ jobs:
         run: pnpm test
       - name: Build
         run: pnpm build
+      - name: Package compatibility
+        run: pnpm test:package
