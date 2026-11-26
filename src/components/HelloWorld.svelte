@@ -17,7 +17,7 @@
 		<p style={`font-size:24px; color: ${$enabled ? 'green' : 'red'}`}>
 			{$enabled ? 'Feature is enabled!' : 'Feature is disabled!'}
 			{#if $variant.enabled}
-				<p>{$variant.name}</p>
+				<span>{$variant.name}</span>
 			{/if}
 		</p>
 	{/if}
@@ -36,8 +36,9 @@
 
 <style>
 	:root {
-		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
-			'Open Sans', 'Helvetica Neue', sans-serif;
+		font-family:
+			-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans',
+			'Helvetica Neue', sans-serif;
 	}
 
 	main {
